@@ -1,0 +1,177 @@
+---
+title: Estadística
+subtitle: "Actividad 1 - Iniciando con R"
+author: "Pablo Antonio Galvan Ortiz"
+date: "13 de Septiembre de 2023"
+output: 
+    prettydoc::html_pretty:
+      theme: leonids
+      highlight: vignette
+---
+<div>
+<p style = 'text-align:center;'>
+![](yo.png){width='400px'}
+</div>
+</p>
+
+<div>
+<p style = 'text-align:center;'>
+![](homero.gif){width='400px'}
+</div>
+</p>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Descripción
+
+La siguiente tarea tiene como objetivo reforzar los conceptos de programación en lenguaje `R` que se discutieron en las sesiones pasadas. 
+
+### Vectores atómicos
+
+En `R`, los vectores atómicos se pueden generar mediante diversos comandos, e.g., `x <- c("a","char","nuevo")` representa un vector de carácteres. Basado en lo anterior cree vectores con las siguientes características:
+
++ Un vector que represente $\{2^i\}_{i=1}^{20}$
+```{r ejercicio1}
+  i<-1:20
+  2^i
+```
++ Un vector que represente $\{2n+1\}_{n=4}^{13}$
+```{r ejercicio2}
+  n<-4:13
+  (2^n)+1
+```
++ Un vector que represente $\{2n+1\}_{n=4}^{13} \cap \{2^i\}_{i=1}^{20}$
+```{r ejercicio3}
+  vector_n <- (4:13) * 2 + 1
+  vector_i <- 2^(1:20)
+  intersect(vector_n, vector_i)
+  
+```
+
++ Un vector que represente $\{\sin(2*\pi t)\}_{t=1}^5$
+```{r ejercicio 4}
+  t<-seq(1,5)
+  sin(2*pi*t)
+```
+
++ Un vector de $10$ números aleatorios con distribución uniforme (apóyese del comando `runif()`).
+```{r ejercicio 5}
+  runif(10)
+```
+
++ Un vector con las primeras 15 letras del abecedario en mayúsculas.
+```{r}
+  LETTERS[1:15]
+```
+
+
+Supóngamos ahora que se intentan generar los siguientes vectores atómicos:
+
+
+```{r, echo=T}
+x1 <- c("1","2",2+3i,5+41)
+x2 <- log(c(T,T,T,T,F))
+x3 <- !(c(1,3,4,12,12.1,99,100))
+x4 <- c(1,2,3)<"a"
+x5 <- 1:10
+```
+
+### ¿De qué tipo es cada una de ellas? Liste el tipo de cada una de ellas.
+
++ x1 contiene una mezcla de caracteres y números complejos, por lo que su tipo es "character".
++ x2 es un vector de valores lógicos (TRUE o FALSE) obtenidos a partir de la función log(), por lo que su tipo es "logical".
++ x3 es un vector de valores lógicos (TRUE o FALSE) obtenidos a partir de la negación !, por lo que su tipo es "logical".
++ x4 es un vector de valores lógicos (TRUE o FALSE) obtenidos a partir de una comparación entre números y caracteres, por lo que su tipo es "logical".
++ x5 es un vector de números enteros en secuencia, por lo que su tipo es "integer".
+
+### Matrices
+
+En el siguiente ejercicio se crearán las siguientes matrices:
+ 
++ Una matriz de $2\times3$ con carácteres (de cualquier tipo).
+```{r ejercico 7}
+  matrix(c("a", "b", "c", "x", "y", "z"), nrow = 2, ncol = 3)
+
+```
+
++ Una matriz de $4\times4$ cuyos elementos son sólo la letra `"a"`.
+```{r ejercicio 8}
+  matrix("a", nrow = 4, ncol = 4)
+```
+
++ Una matriz de $5\times5$ cuyos elementos son las letras minúsculas.
+```{r ejercicio 9}
+  matrix(letters, nrow = 5, ncol = 5)
+```
+
++ Una matriz de $2\times2$ cuyos elementos son valores complejos.
+```{r ejercicio 10}
+  matrix(complex(real = c(1.0, 2.0, 3.0, 4.0), imaginary = c(2.0, -1.0, 0.5, -3.0)), nrow = 2)
+```
+
+
+### Una matriz se puede generar igual mediante otros dos comandos ?Cuáles son?
+
+si, en lenguaje R se pueden generar una matriz con valores complejos utilizando otros dos comandos alternativos ademas de matrix y complex, los comandos para crear una matriz son los siguientes
+
++ array
+```{r ejercicio 11}
+  array(c(1 + 2i, 2 - 1i, 3 + 0.5i, 4 - 3i), dim = c(2, 2))
+```
++ cbind
+```{r ejercicio 12}
+  columna1 <- c(1 + 2i, 3 + 0.5i)
+  columna2 <- c(2 - 1i, 4 - 3i)
+  cbind(columna1, columna2)
+```
+
+### Listas 
+
+Una lista es una generalización tanto de un vector atómico como de un `data.frame`. Los elementos de un vector atómico pueden ser de cualquier tipo. Supongamos que tenemos un lista dada por
+
+```{r, eval=FALSE}
+x <- list(1,"a",2+3i,T,F,1L)
+```
+
+- ¿Qué sucede si a la lista `x` le aplico `dim(x) <- c(2,3)`?
+
+R: obtendremos un error porque las listas en R no tienen una dimansion como lo tienen una dimension como lo tienen las matrices o arrays por lo que no se puede asignar una dimensión a la lista de la misma manera que lo harías con una matriz.
+
+- ¿Cómo se podria llamar a ese nuevo objeto?
+
+R:se le podria llamar matriz X
+
+- ¿Qué sucede si `c(list("a"), 2+3i)`? ?De qué tipo es el resultado?
+
+R: Cuando se ejecuta la operación c(list("a"), 2+3i), se esta combinando una lista y un vector atómico en R. El resultado será una nueva lista que contiene ambos elementos. En este caso, el resultado será una lista con dos elementos: la lista original list("a") y el número complejo 2+3i.
+
+ 
+ 
+### Gráficos
+
+El comando `plot` me permite graficar dos vectores de igual longtitud. El comando `par(mfrow=c(2,2))` divide el espacio de graficación en dos filas y dos columnas con lo cual yo graficar 4 gráficos sobre la misma figura. 
+Por otro lado el comando `write(path)` permite escribir un archivo en la dirección dada por `path`, por ejemplo:
+
+```{r eval=FALSE}
+x <-rnorm(20)   # Variables aleatorias con media 0 y sd 1
+write(x,"archivo.txt", "\n")
+```
+Crea un archivo llamado `archivo.txt` en el directorio de trabajo. De igual forma `R` permite graficar en otro **dispositivo**. Por ejemplo, podemos graficar en un dispositivo PDF y después guardar el archivo en el directorio de trabajo mediante el siguiente comando:
+
+```{r eval=FALSE}
+pdf("julio.pdf")            # Creamos el PDF
+plot(rnorm(30),type = "l")  # Graficamos en el dispositivo
+dev.off()                   # Finalmente cerramos el PDF
+
+```
+
+Con base en lo anterior se requiere que el estudiante genere 40 archivos llamados con valores aleatorios del tipo uniforme (creados mediante `runif()`) y cree los archivos `txt` y `pdf` que contienen sus valores y sus gráficos. 
+
+El trabajo se tiene que entregar el miércoles 13 de Septiembre.
+
+## Referencias adicionales
+
+- Puede consultar cualquier libro de R.
+- Se puede consultar las presentaciones previas.
